@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue test!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <style>
+        .thing {
+        margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <section id="things">
+
+        <form action="">
+            <h1>Sorting</h1>
+            <label>
+                <input type="radio" name="sorting" value="name" checked v-on="change: sortBy('title')"/>
+                Name
+            </label>
+            <label for="price">
+                <input type="radio" name="sorting" id="price" value="distance" v-on="change: sortBy('distance')"/>
+                Distance
+            </label>
+
+
+            <h1>Filtering</h1>
+
+            <div class="checkbox" v-repeat="filters">
+                <label>
+                    <input type="checkbox" name="{{label}}" v-model="active"/>
+                    {{label}}
+                </label>
+            </div>
+        </form>
+
+            <article class="thing well" v-repeat="
+            things
+            | orderBy sortField
+            | itHas">
+                <header>{{title}}</header>
+                <section v-if="itHas.length">
+                    <strong>KWaliteitsprofiel stuff</strong>
+                    <ul>
+                        <li v-repeat="itHas">{{$value}}</li>
+                    </ul>
+                </section>
+                <footer>
+                    {{distance}}km
+                </footer>
+            </article>
+
+    </section>
+</div>
+
+<script src="js/bundle.js"></script>
+</body>
+</html>
