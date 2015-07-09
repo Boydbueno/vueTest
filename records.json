@@ -1,0 +1,27 @@
+[
+  {
+    "title": "Apotheek St. Rijndam revalidatie-centrum",
+    "distance": 1,
+    "qualities": []
+  },
+  {
+    "title": "Medsen Oog Apotheek",
+    "distance": 2,
+    "qualities": ["register", "spreekkamer", "patientervaring", "cmr", "anwdienst", "fto", "hkz", "klachtenregeling"]
+  },
+  {
+    "title": "BENU Wester Apotheek",
+    "distance": 8,
+    "qualities": ["register", "spreekkamer", "patientervaring", "fto", "hkz", "klachtenregeling"]
+  },
+  {
+    "title": "Erasmus Apotheek",
+    "distance": 4,
+    "qualities": ["patientervaring", "cmr", "anwdienst", "fto", "hkz", "klachtenregeling"]
+  },
+  {
+    "title": "Ramleh Apotheek",
+    "distance": 22,
+    "qualities": ["register"]
+  }
+]

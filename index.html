@@ -4,57 +4,60 @@
     <meta charset="UTF-8">
     <title>Vue test!</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <style>
-        .thing {
-        margin: 20px 0;
-        }
-    </style>
 </head>
 <body>
 
 <div class="container">
-    <section id="things">
+    <section id="records">
 
         <form action="">
-            <h1>Sorting</h1>
-            <label>
-                <input type="radio" name="sorting" value="name" checked v-on="change: sortBy('title')"/>
-                Name
-            </label>
-            <label for="price">
-                <input type="radio" name="sorting" id="price" value="distance" v-on="change: sortBy('distance')"/>
-                Distance
-            </label>
+            <h1 v-on="click: isSortingVisible = !isSortingVisible">Sorting</h1>
 
+            <div class="sorting" v-show="isSortingVisible">
+                <label>
+                    <input type="radio" name="sorting" value="title" v-model="sortField"/>
+                    Name
+                </label>
+                <label for="distance">
+                    <input type="radio" name="sorting" id="distance" value="distance" v-model="sortField"/>
+                    Distance
+                </label>
+            </div>
 
-            <h1>Filtering</h1>
+            <h1 v-on="click: isFilterVisible = !isFilterVisible">Filtering</h1>
 
-            <div class="checkbox" v-repeat="filters">
+            <div v-repeat="filters" v-show="isFilterVisible">
                 <label>
                     <input type="checkbox" name="{{label}}" v-model="active"/>
                     {{label}}
                 </label>
             </div>
+
+            <input type="search" v-model="searchTerm"/>
         </form>
 
-            <article class="thing well" v-repeat="
-            things
+        <article class="well" v-repeat="
+            records
             | orderBy sortField
-            | itHas">
-                <header>{{title}}</header>
-                <section v-if="itHas.length">
-                    <strong>KWaliteitsprofiel stuff</strong>
-                    <ul>
-                        <li v-repeat="itHas">{{$value}}</li>
-                    </ul>
-                </section>
-                <footer>
-                    {{distance}}km
-                </footer>
-            </article>
-
+            | filterOnQuality
+            | filterBy searchTerm">
+            <header>{{title}}</header>
+            <section v-if="qualities.length">
+                <strong>Kwaliteitsprofiel stuff</strong>
+                <ul>
+                    <li v-repeat="qualities">{{$value}}</li>
+                </ul>
+            </section>
+            <footer>
+                {{distance}}km
+            </footer>
+        </article>
+        <pre>
+            {{ $data | json }}
+        </pre>
     </section>
 </div>
+
 
 <script src="js/bundle.js"></script>
 </body>

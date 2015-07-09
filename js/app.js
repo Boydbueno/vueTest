@@ -2,107 +2,73 @@ var Vue = require('Vue');
 
 var things = new Vue({
 
-    el: '#things',
+    el: '#records',
+
+    ready: function() {
+        this.fetchFilters();
+        this.fetchRecords();
+    },
 
     data: {
         sortField: 'title',
-        filters: [
-            {
-                key: 'register',
-                label: 'Apotheker in Specialistenregister voor Openbaar Apothekers',
-                active: false
-            },
-            {
-                key: 'spreekkamer',
-                label: 'Spreekkamer',
-                active: false
-            },
-            {
-                key: 'patientervaring',
-                label: 'Recent onderzoek patiëntervaring',
-                active: false
-            },
-            {
-                key: 'cmr',
-                label: 'Medicatie-incidenten registratie (CMR)',
-                active: false
-            },
-            {
-                key: 'anwdienst',
-                label: 'Deelname lokale dan wel regionale avond-, nacht- en weekenddienst',
-                active: false
-            },
-            {
-                key: 'fto',
-                label: 'Deelname structureel overleg met voorschrijvers',
-                active: false
-            },
-            {
-                key: 'hkz',
-                label: 'HKZ- certificaat',
-                active: false
-            },
-            {
-                key: 'klachtenregeling',
-                label: 'Klachtenregeling',
-                active: false
-            }
-        ],
-        things: [
-            {
-                title: "Apotheek St. Rijndam revalidatie-centrum",
-                distance: 12,
-                itHas: []
-            },
-            {
-                title: "Medsen Oog Apotheek",
-                distance: 2,
-                itHas: ['register', 'spreekkamer', 'patientervaring', 'cmr', 'anwdienst', 'fto', 'hkz', 'klachtenregeling']
-            },
-            {
-                title: "BENU Wester Apotheek",
-                distance: 8,
-                itHas: ['register', 'spreekkamer', 'patientervaring', 'fto', 'hkz', 'klachtenregeling']
-            },
-            {
-                title: "Erasmus Apotheek",
-                distance: 4,
-                itHas: ['patientervaring', 'cmr', 'anwdienst', 'fto', 'hkz', 'klachtenregeling']
-            },
-            {
-                title: "Ramleh Apotheek",
-                distance: 22,
-                itHas: ['register']
-            }
-        ]
+        isSortingVisible: true,
+        isFilterVisible: true,
+        searchTerm: '',
+        filters: [],
+        records: []
     },
 
     methods: {
         sortBy: function(sortField) {
             this.sortField = sortField;
+        },
+
+        fetchFilters: function() {
+            this.fetch('/filters.json', data => {
+                this.filters = data;
+            });
+        },
+
+        fetchRecords: function() {
+            this.fetch('/records.json', data => {
+                 this.records = data;
+            });
+        },
+
+        fetch: function(url, callback) {
+            var request = new XMLHttpRequest();
+            request.open('GET', url, true);
+
+            request.onload = () => {
+                if (request.status >= 200 && request.status < 400) {
+                    callback(JSON.parse(request.responseText));
+                }
+            };
+
+            request.send();
         }
     },
 
     filters: {
-        itHas: function(things) {
-
+        filterOnQuality: function(records) {
             var anyFiltersActive = false;
 
+            // Check if any filters are active
             this.filters.forEach(function(filter) {
                 if (filter.active) {
                     anyFiltersActive = true;
                 }
             });
 
-            if (!anyFiltersActive) return things;
+            if (!anyFiltersActive) return records;
 
-            return things.filter((thing) => {
+            return records.filter((record) => {
                 // Get all 'properties' from current thing
-                var itHas = thing.itHas;
+                var qualities = record.qualities;
 
                 // Get all filter objects that are relevant for this thing
                 let filters = this.filters.filter(function(filter) {
-                    return itHas.indexOf(filter.key) >= 0;
+                    return qualities.indexOf(filter.key) >= 0;
                 });
 
                 // Check if any of this

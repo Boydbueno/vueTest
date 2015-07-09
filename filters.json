@@ -1,0 +1,42 @@
+[
+  {
+    "key": "register",
+    "label": "Apotheker in Specialistenregister voor Openbaar Apothekers",
+    "active": false
+  },
+  {
+    "key": "spreekkamer",
+    "label": "Spreekkamer",
+    "active": false
+  },
+  {
+    "key": "patientervaring",
+    "label": "Recent onderzoek patientervaring",
+    "active": false
+  },
+  {
+    "key": "cmr",
+    "label": "Medicatie-incidenten registratie (CMR)",
+    "active": false
+  },
+  {
+    "key": "anwdienst",
+    "label": "Deelname lokale dan wel regionale avond-, nacht- en weekenddienst",
+    "active": false
+  },
+  {
+    "key": "fto",
+    "label": "Deelname structureel overleg met voorschrijvers",
+    "active": false
+  },
+  {
+    "key": "hkz",
+    "label": "HKZ- certificaat",
+    "active": false
+  },
+  {
+    "key": "klachtenregeling",
+    "label": "Klachtenregeling",
+    "active": false
+  }
+]
